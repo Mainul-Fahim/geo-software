@@ -5,8 +5,12 @@ const Countries = () => {
 
     const [currency, setCurrency] = useState('');
     const [country, setCountry] = useState([]);
+    const [countryName, setCountryName] = useState('');
+    const [countrySearchResult, setCountrySearchResult] = useState([]);
 
     const handleClick = () => {
+        document.getElementById('moreCountry').innerHTML = "";
+        //document.getElementById('countrySearch').innerHTML = "";
         fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/countries?currencyCode=${currency}`, {
             "method": "GET",
             "headers": {
@@ -29,9 +33,37 @@ const Countries = () => {
 
     const handleLoadMore = () => {
 
-        
+        const moreCountry = country.slice(10);
+        console.log(moreCountry);
+        if (moreCountry.length !== 0) {
 
+            document.getElementById('moreCountry').innerText = moreCountry.map(country => country.name);
+
+        }
+        else {
+            document.getElementById('moreCountry').innerText = "Sorry nothing to Load";
+        }
     }
+
+    const handleOnSubmit = () => {
+
+        console.log(countryName, 'clicked');
+        fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/countries?namePrefix=${countryName}`, {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
+                "x-rapidapi-key": "1c8bec90d8msh4fe16494e72b79ep16f4c4jsn4f21e6d6fea7"
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.data);
+                setCountrySearchResult(data.data);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    };
 
     return (
         <div className="text-center mt-5">
@@ -52,15 +84,36 @@ const Countries = () => {
                 <div className="ms-5 pt-4 mt-3">
                     <div className="btn btn-primary" onClick={() => handleClick()}>Find Countries</div>
                 </div>
+
             </div>
-            <p className="me-5 mt-3 mb-3">List of Countries: </p>
-            <div className="d-flex justify-content-center"> 
+
+            <div className="d-flex justify-content-center">
+                <p className="me-5 mt-3 mb-3">List of Countries: </p>
+
+                <input className="p-1 mt-3 mb-2" onChange={(e) => {
+                    const selectedCountry = e.target.value;
+                    setCountryName(selectedCountry);
+                }} name="search" placeholder="Enter country name" />
+
+                <button onClick={() => handleOnSubmit()} className="btn btn-secondary p-1 mt-3 mb-2 ms-3">Submit</button>
+
+            </div>
+
+            <div className="d-flex justify-content-center">
                 <table class="table table-hover table-bordered w-75">
                     <tbody>
-                        {country.slice(0,10).map(country=><tr>
+                        {country.slice(0, 10).map(country => <tr>
 
                             <td colspan="4" >{country.name}</td>
-                           
+
+                        </tr>)}
+                        <tr>
+                            <td id="moreCountry"></td>
+                        </tr>
+                        {countrySearchResult.map(country => <tr>
+
+                            <td id="countrySearch" colspan="4" >{country.name}</td>
+
                         </tr>)}
                     </tbody>
                 </table>
