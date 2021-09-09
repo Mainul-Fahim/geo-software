@@ -6,6 +6,7 @@ const Countries = () => {
     const [currency, setCurrency] = useState('');
     const [country, setCountry] = useState([]);
     const [countryName, setCountryName] = useState('');
+    const [sorting, setSorting] = useState('');
     const [countrySearchResult, setCountrySearchResult] = useState([]);
 
     const handleClick = () => {
@@ -21,7 +22,11 @@ const Countries = () => {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                setCountry(data.data);
+                const allCountries = data.data.map(data =>data.name);
+                const ascendingCountries= sorting==='Descending'?allCountries.sort().reverse():allCountries.sort();
+                console.log(allCountries);
+                console.log(ascendingCountries);
+                setCountry(ascendingCountries);
             })
             .then(data => {
                 console.log(data);
@@ -57,8 +62,9 @@ const Countries = () => {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data.data);
-                setCountrySearchResult(data.data);
+                const allCountries = data.data.map(data =>data.name);
+                const ascendingCountries= sorting==='Descending'?allCountries.sort().reverse():allCountries.sort();
+                setCountrySearchResult(ascendingCountries);
             })
             .catch(err => {
                 console.error(err);
@@ -96,7 +102,17 @@ const Countries = () => {
                 }} name="search" placeholder="Enter country name" />
 
                 <button onClick={() => handleOnSubmit()} className="btn btn-secondary p-1 mt-3 mb-2 ms-3">Submit</button>
-
+                <div className="m-3">
+                    <select class="form-select form-select-sm ps-4 ms-2" onChange={(e) => {
+                        const selectedSorting = e.target.value;
+                         setSorting(selectedSorting);
+                    }} aria-label=".form-select-sm example">
+                        
+                        <option selected>Ascending</option>
+                        <option >Descending</option>
+                      
+                    </select>
+                </div>
             </div>
 
             <div className="d-flex justify-content-center">
@@ -104,7 +120,7 @@ const Countries = () => {
                     <tbody>
                         {country.slice(0, 10).map(country => <tr>
 
-                            <td colspan="4" >{country.name}</td>
+                            <td id="allCountry" colspan="4" >{country}</td>
 
                         </tr>)}
                         <tr>
@@ -112,7 +128,7 @@ const Countries = () => {
                         </tr>
                         {countrySearchResult.map(country => <tr>
 
-                            <td id="countrySearch" colspan="4" >{country.name}</td>
+                            <td id="countrySearch" colspan="4" >{country}</td>
 
                         </tr>)}
                     </tbody>
