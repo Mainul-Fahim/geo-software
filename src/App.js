@@ -5,18 +5,19 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Countries from "./components/Countries/Countries";
 
 function App() {
   return (
     <Router>
-        <Switch>
-            <Route path="/">
-                
-            </Route>
-            <Route path="/countries">
-                
-                </Route>
-        </Switch>
+      <Switch>
+        <Route path="/">
+            <Countries/>
+        </Route>
+        <Route path="/countries">
+            <Countries/>
+        </Route>
+      </Switch>
     </Router>
   );
 }
