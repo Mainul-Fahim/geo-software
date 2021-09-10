@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import allCurrency from '../../CurrencyData/CurrencyData';
+import DisplayList from '../DisplayList/DisplayList';
+import SortAndFilter from '../SortAndFilter/SortAndFilter';
 
 const Countries = () => {
 
     const [currency, setCurrency] = useState('');
     const [country, setCountry] = useState([]);
+    const [countryId, setCountryId] = useState('');
     const [countryName, setCountryName] = useState('');
     const [sorting, setSorting] = useState('');
     const [countrySearchResult, setCountrySearchResult] = useState([]);
@@ -23,7 +26,7 @@ const Countries = () => {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                const allCountries = data.data.map(data =>data.name);
+                const allCountries = data.data.map(data =>data.name+ ','+data.code);
                 const ascendingCountries= sorting==='Descending'?allCountries.sort().reverse():allCountries.sort();
                 console.log(allCountries);
                 console.log(ascendingCountries);
@@ -117,51 +120,13 @@ const Countries = () => {
 
               {/* filter by countryName and sorting div starts */}
 
-            <div className="d-flex justify-content-center">
-                <p className="me-5 mt-3 pt-2 mb-3">List of Countries: </p>
-
-                <input className="p-1 mt-3 mb-2" onChange={(e) => {
-                    const selectedCountry = e.target.value;
-                    setCountryName(selectedCountry);
-                }} name="search" placeholder="Enter country name" />
-
-                <button onClick={() => handleOnSubmit()} className="btn btn-secondary p-1 mt-3 mb-2 ms-3">Submit</button>
-                
-                <div className="m-3">
-                    <select class="form-select form-select-sm ps-4 ms-2" onChange={(e) => {
-                        const selectedSorting = e.target.value;
-                         setSorting(selectedSorting);
-                    }} aria-label=".form-select-sm example">
-                        
-                        <option selected>Ascending</option>
-                        <option >Descending</option>
-                      
-                    </select>
-                </div>
-            </div>
+                <SortAndFilter setSorting={setSorting} setCountryName={setCountryName} handleOnSubmit={handleOnSubmit}/>
+            
 
               {/* Country list table div starts       */}
               
-            <div className="d-flex justify-content-center">
-                <table class="table table-hover table-bordered w-75">
-                    <tbody>
-                        {country.slice(0, 10).map(country => <tr>
-
-                            <td id="allCountry" colspan="4" >{country}</td>
-
-                        </tr>)}
-                        <tr>
-                            <td id="moreCountry"></td>
-                        </tr>
-                        {countrySearchResult.map(country => <tr>
-
-                            <td id="countrySearch" colspan="4" >{country}</td>
-
-                        </tr>)}
-                    </tbody>
-                </table>
-            </div>
-            <button onClick={() => handleLoadMore()} className="btn btn-primary mt-3 mb-3">Load More</button>
+               <DisplayList country={country} countrySearchResult={countrySearchResult} handleLoadMore={handleLoadMore} />
+              
         </div>
     );
 };

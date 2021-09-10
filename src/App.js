@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Countries from "./components/Countries/Countries";
 import NotFound from "./components/NotFound/NotFound";
+import Regions from "./components/Regions/Regions";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
         </Route>
         <Route path="/countries">
             <Countries/>
+        </Route>
+        <Route path="/regions/:id">
+            <Regions/>
         </Route>
         <Route path="*">
             <NotFound/>
