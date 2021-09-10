@@ -9,9 +9,10 @@ const Countries = () => {
     const [sorting, setSorting] = useState('');
     const [countrySearchResult, setCountrySearchResult] = useState([]);
 
-    const handleClick = () => {
+    const handleClickFindCountries = () => {
+        
         document.getElementById('moreCountry').innerHTML = "";
-        //document.getElementById('countrySearch').innerHTML = "";
+
         fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/countries?currencyCode=${currency}`, {
             "method": "GET",
             "headers": {
@@ -51,8 +52,9 @@ const Countries = () => {
     }
 
     const handleOnSubmit = () => {
-
+        
         console.log(countryName, 'clicked');
+        
         fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/countries?namePrefix=${countryName}`, {
             "method": "GET",
             "headers": {
@@ -64,18 +66,32 @@ const Countries = () => {
             .then(data => {
                 const allCountries = data.data.map(data =>data.name);
                 const ascendingCountries= sorting==='Descending'?allCountries.sort().reverse():allCountries.sort();
+
+                if(countryName===""){
+                    alert("Please enter!");
+                }
+                else {
                 setCountrySearchResult(ascendingCountries);
+                }
             })
             .catch(err => {
                 console.error(err);
             });
     };
 
+    const handleClickRefresh = ()=>{
+
+        window.location.reload();
+    }
+
     return (
+        
         <div className="text-center mt-5">
             <h1>Geo Software</h1>
+            
             <div className="d-flex mt-5 ms-5 justify-content-center">
 
+                {/* filter country by currency Div starts */}
                 <div className="mt-1">
                     <p className="text-secondary">Select a currency</p>
                     <select class="form-select form-select-sm" onChange={(e) => {
@@ -88,13 +104,21 @@ const Countries = () => {
                     </select>
                 </div>
                 <div className="ms-5 pt-4 mt-3">
-                    <div className="btn btn-primary" onClick={() => handleClick()}>Find Countries</div>
+                    <div className="btn btn-primary" onClick={() => handleClickFindCountries()}>Find Countries</div>
                 </div>
 
+                <div className="ms-5 pt-4 mt-3">
+                    <div className="btn btn-success" onClick={() => handleClickRefresh()}>Refresh Page</div>
+                </div>
+                
             </div>
+              
+              {/* filter country by currency div ends   */}
+
+              {/* filter by countryName and sorting div starts */}
 
             <div className="d-flex justify-content-center">
-                <p className="me-5 mt-3 mb-3">List of Countries: </p>
+                <p className="me-5 mt-3 pt-2 mb-3">List of Countries: </p>
 
                 <input className="p-1 mt-3 mb-2" onChange={(e) => {
                     const selectedCountry = e.target.value;
@@ -102,6 +126,7 @@ const Countries = () => {
                 }} name="search" placeholder="Enter country name" />
 
                 <button onClick={() => handleOnSubmit()} className="btn btn-secondary p-1 mt-3 mb-2 ms-3">Submit</button>
+                
                 <div className="m-3">
                     <select class="form-select form-select-sm ps-4 ms-2" onChange={(e) => {
                         const selectedSorting = e.target.value;
@@ -115,6 +140,8 @@ const Countries = () => {
                 </div>
             </div>
 
+              {/* Country list table div starts       */}
+              
             <div className="d-flex justify-content-center">
                 <table class="table table-hover table-bordered w-75">
                     <tbody>

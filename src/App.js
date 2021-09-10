@@ -6,17 +6,21 @@ import {
   Link
 } from "react-router-dom";
 import Countries from "./components/Countries/Countries";
+import NotFound from "./components/NotFound/NotFound";
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/">
+        <Route exact path="/">
             <Countries/>
         </Route>
         <Route path="/countries">
             <Countries/>
         </Route>
+        <Route path="*">
+            <NotFound/>
+          </Route>
       </Switch>
     </Router>
   );
