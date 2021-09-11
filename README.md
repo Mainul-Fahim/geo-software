@@ -3,7 +3,6 @@
 
 ## Installation Instructions
 
-In the project directory, you can run:
 
 ### 1.
 - Open your terminal and then type
