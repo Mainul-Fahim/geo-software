@@ -15,6 +15,7 @@ const Regions = () => {
     const [region,setRegion] = useState([]);
     const [regionName, setRegionName] = useState('');
     const [sorting, setSorting] = useState('');
+    const [totalRegion, setTotalRegion] = useState({});
     const [regionSearchResult, setRegionSearchResult] = useState([]);
 
     useEffect(() => {
@@ -28,6 +29,7 @@ const Regions = () => {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                setTotalRegion(data.metadata);
                 const allCountries = data.data.map(data =>data.name+ ','+data.countryCode);
                 const ascendingCountries= sorting==='Descending'?allCountries.sort().reverse():allCountries.sort();
                 console.log(allCountries);
@@ -99,7 +101,7 @@ const Regions = () => {
             <h1>Geo Software {id}</h1>
             <div className="d-flex mt-5 ms-5 justify-content-center">
                 <h3>Country Selected : {id}</h3>
-                <h3 className="ms-5 ps-5">Total no of Regions: </h3>
+                <h3 className="ms-5 ps-5">Total no of Regions: {totalRegion.totalCount>0?totalRegion.totalCount:'Sorry no regions'}</h3>
 
                 <div className="ms-5 pt-4 mt-3">
                     <div className="btn btn-success" onClick={() => handleClickRefresh()}>Refresh Page</div>

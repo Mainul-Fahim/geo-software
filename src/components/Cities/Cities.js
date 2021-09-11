@@ -14,7 +14,7 @@ const Cities = () => {
     const [sorting, setSorting] = useState('');
     const [citySearchResult, setCitySearchResult] = useState([]);
     const [metaData, setMetaData] = useState([]);
-    const [totalRegion, setTotalRegion] = useState({});
+    const [totalCities, setTotalCities] = useState({});
 
     useEffect(() => {
         fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?countryIds=${id}`, {
@@ -27,7 +27,7 @@ const Cities = () => {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                setTotalRegion(data.metadata);
+                setTotalCities(data.metadata);
                 const extraData = data.data;
                 console.log(extraData);
                 setMetaData(extraData);
@@ -100,10 +100,10 @@ const Cities = () => {
     return (
 
         <div className="text-center mt-5">
-            <h1>Geo Software {id}</h1>
+            <h1>Geo Software </h1>
             <div className="d-flex mt-5 ms-5 justify-content-center">
                 <h3>Region Selected : {id}</h3>
-                <h3 className="ms-5 ps-5">Total no of Cities: {totalRegion.totalCount}</h3>
+                <h3 className="ms-5 ps-5">Total no of Cities: {totalCities.totalCount>0?totalCities.totalCount:'Sorry no of cities'}</h3>
 
                 <div className="ms-5 pt-4 mt-3">
                     <div className="btn btn-success" onClick={() => handleClickRefresh()}>Refresh Page</div>

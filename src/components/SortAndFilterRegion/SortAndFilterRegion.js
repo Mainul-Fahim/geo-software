@@ -4,12 +4,12 @@ const SortAndFilterRegion = ({setSorting,setRegionName,handleOnSubmitRegion,sort
     return (
         <>
             <div className="d-flex justify-content-center">
-                <p className="me-5 mt-3 pt-2 mb-3">List of Countries: </p>
+                <p className="me-5 mt-3 pt-2 mb-3">List of Regions: </p>
 
                 <input className="p-1 mt-3 mb-2" onChange={(e) => {
                     const selectedCountry = e.target.value;
                     setRegionName(selectedCountry);
-                }} name="search" placeholder="Enter country name" />
+                }} name="search" placeholder="Enter Region name" />
 
                 <button onClick={() => handleOnSubmitRegion(regionName,sorting,setRegionSearchResult)} className="btn btn-secondary p-1 mt-3 mb-2 ms-3">Submit</button>
                 

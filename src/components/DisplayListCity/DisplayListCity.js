@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 const DisplayListCity = ({ city, citySearchResult, handleLoadMore, metaData }) => {
 
+    // useEffect(() => {
+    //     setInterval(() => {
+    //         window.location.reload();
+    //     }, 3000)
+    // }, [])
 
-    const handleClickPlus = (id) => {
-        console.log(id, 'clicked');
-
-        document.getElementById('plus-btn').style.display = 'none';
-        document.getElementById('meta-div').style.display = 'block';
+    const handleClickPlus = () => {
+        setInterval(() => {
+            window.location.reload();
+        }, 30000)
         // const finalMetaData = metaData.filter(city => city.name === cityName);
 
         //finalMetaData.map(city =>city.longitude)
@@ -68,14 +70,14 @@ const DisplayListCity = ({ city, citySearchResult, handleLoadMore, metaData }) =
 
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingOne">
-                                <button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                <button onClick={() =>handleClickPlus()} class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                     <div className="btn btn-primary">+</div>
                                 </button>
                             </h2>
                             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body"><li>Longitude : {city.longitude}</li>
-                            <li>Latitude: {city.latitude}</li>
-                            <li>Population: {city.population}</li></div>
+                                <div style={{listStyle:'none'}} class="accordion-body"><li>Longitude : {city.longitude}</li>
+                                    <li>Latitude: {city.latitude}</li>
+                                    <li>Population: {city.population}</li></div>
                             </div>
                         </div>
 
