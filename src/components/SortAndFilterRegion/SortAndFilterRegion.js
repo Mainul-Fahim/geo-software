@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SortAndFilter = ({setSorting,setCountryName,handleOnSubmit,countryName,sorting,setCountrySearchResult}) => {
+const SortAndFilterRegion = ({setSorting,setRegionName,handleOnSubmitRegion,sorting,regionName,setRegionSearchResult,handleSort}) => {
     return (
         <>
             <div className="d-flex justify-content-center">
@@ -8,16 +8,16 @@ const SortAndFilter = ({setSorting,setCountryName,handleOnSubmit,countryName,sor
 
                 <input className="p-1 mt-3 mb-2" onChange={(e) => {
                     const selectedCountry = e.target.value;
-                    setCountryName(selectedCountry);
+                    setRegionName(selectedCountry);
                 }} name="search" placeholder="Enter country name" />
 
-                <button onClick={() => handleOnSubmit(countryName,sorting,setCountrySearchResult)} className="btn btn-secondary p-1 mt-3 mb-2 ms-3">Submit</button>
+                <button onClick={() => handleOnSubmitRegion(regionName,sorting,setRegionSearchResult)} className="btn btn-secondary p-1 mt-3 mb-2 ms-3">Submit</button>
                 
                 <div className="m-3">
                     <select class="form-select form-select-sm ps-4 ms-2" onChange={(e) => {
                         const selectedSorting = e.target.value;
                          setSorting(selectedSorting);
-                    }} aria-label=".form-select-sm example">
+                    }} onClick={() =>handleSort()}  aria-label=".form-select-sm example">
                         
                         <option selected>Ascending</option>
                         <option >Descending</option>
@@ -29,4 +29,4 @@ const SortAndFilter = ({setSorting,setCountryName,handleOnSubmit,countryName,sor
     );
 };
 
-export default SortAndFilter;
+export default SortAndFilterRegion;

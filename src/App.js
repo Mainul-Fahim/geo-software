@@ -5,6 +5,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Cities from "./components/Cities/Cities";
 import Countries from "./components/Countries/Countries";
 import NotFound from "./components/NotFound/NotFound";
 import Regions from "./components/Regions/Regions";
@@ -21,6 +22,9 @@ function App() {
         </Route>
         <Route path="/regions/:id">
             <Regions/>
+        </Route>
+        <Route path="/cities/:id">
+            <Cities/>
         </Route>
         <Route path="*">
             <NotFound/>

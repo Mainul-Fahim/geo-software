@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import DisplayList from '../DisplayList/DisplayList';
-import DisplayListRegion from '../DisplayListRegion/DisplayListRegion';
-import SortAndFilter from '../SortAndFilter/SortAndFilter';
-import SortAndFilterRegion from '../SortAndFilterRegion/SortAndFilterRegion';
-import { handleLoadMore } from '../StatesAndFunctions/StatesAndFunctions';
-import { handleOnSubmitRegion } from '../StatesAndFunctions/StatesAndFunctions';
+import DisplayListCity from '../DisplayListCity/DisplayListCity';
+import SortAndFilterCIty from '../SortAndFilterCity/SortAndFilterCIty';
 import { handleClickRefresh } from '../StatesAndFunctions/StatesAndFunctions';
+import { handleLoadMore } from '../StatesAndFunctions/StatesAndFunctions';
 
-const Regions = () => {
-
+const Cities = () => {
+    
     const { id } = useParams();
-
-    const [region,setRegion] = useState([]);
-    const [regionName, setRegionName] = useState('');
+    
+    const [city,setCity] = useState([]);
+    const [cityName, setCityName] = useState('');
     const [sorting, setSorting] = useState('');
-    const [regionSearchResult, setRegionSearchResult] = useState([]);
+    const [citySearchResult, setCitySearchResult] = useState([]);
 
     useEffect(() => {
-        fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/countries/${id}/regions`, {
+        fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?countryIds=${id}`, {
             "method": "GET",
             "headers": {
                 "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
@@ -32,7 +29,7 @@ const Regions = () => {
                 const ascendingCountries= sorting==='Descending'?allCountries.sort().reverse():allCountries.sort();
                 console.log(allCountries);
                 console.log(ascendingCountries);
-                setRegion(ascendingCountries);
+                setCity(ascendingCountries);
             })
             .catch(err => {
                 console.error(err);
@@ -42,7 +39,7 @@ const Regions = () => {
     const handleSort = () => {
 
         console.log('clicked');
-        fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/countries/${id}/regions`, {
+        fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?countryIds=${id}`, {
             "method": "GET",
             "headers": {
                 "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
@@ -56,7 +53,7 @@ const Regions = () => {
                 const ascendingCountries= sorting==='Descending'?allCountries.sort().reverse():allCountries.sort();
                 console.log(allCountries);
                 console.log(ascendingCountries);
-                setRegion(ascendingCountries);
+                setCity(ascendingCountries);
             })
             .catch(err => {
                 console.error(err);
@@ -64,11 +61,11 @@ const Regions = () => {
 
     }
 
-    const handleOnSubmitRegion = (regionName,sorting,setRegionSearchResult) => {
+    const handleOnSubmitCity = (cityName,sorting,setCitySearchResult) => {
         
-        console.log(regionName, 'clicked');
+        console.log(cityName, 'clicked');
         
-        fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/countries/${id}/regions?namePrefix=${regionName}`, {
+        fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?countryIds=${id}&namePrefix=${cityName}`, {
             "method": "GET",
             "headers": {
                 "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
@@ -80,11 +77,11 @@ const Regions = () => {
                 const allCountries = data.data.map(data =>data.name);
                 const ascendingCountries = sorting==='Descending'?allCountries.sort().reverse():allCountries.sort();
     
-                if(regionName===""){
+                if(cityName===""){
                     alert("Please enter!");
                 }
                 else {
-                setRegionSearchResult(ascendingCountries);
+                setCitySearchResult(ascendingCountries);
                 }
             })
             .catch(err => {
@@ -92,9 +89,10 @@ const Regions = () => {
             });
     };
     
-    
+
 
     return (
+
         <div className="text-center mt-5">
             <h1>Geo Software {id}</h1>
             <div className="d-flex mt-5 ms-5 justify-content-center">
@@ -108,14 +106,14 @@ const Regions = () => {
             </div>
             {/* filter by countryName and sorting div starts */}
 
-            <SortAndFilterRegion sorting={sorting} setSorting={setSorting} setRegionName={setRegionName} setRegionSearchResult={setRegionSearchResult} regionName={regionName} handleOnSubmitRegion={handleOnSubmitRegion} handleSort={handleSort} />
+            <SortAndFilterCIty sorting={sorting} setSorting={setSorting} setCityName={setCityName} setCitySearchResult={setCitySearchResult} cityName={cityName} handleOnSubmitCity={handleOnSubmitCity} handleSort={handleSort} />
             
 
             {/* Country list table div starts       */}
             
-             <DisplayListRegion region={region} regionSearchResult={regionSearchResult} handleLoadMore={handleLoadMore} />
+             <DisplayListCity city={city} citySearchResult={citySearchResult} handleLoadMore={handleLoadMore} />
         </div>
     );
 };
 
-export default Regions;
+export default Cities;

@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import allCurrency from '../../CurrencyData/CurrencyData';
 import DisplayList from '../DisplayList/DisplayList';
 import SortAndFilter from '../SortAndFilter/SortAndFilter';
+import { handleLoadMore } from '../StatesAndFunctions/StatesAndFunctions';
+import { handleOnSubmit } from '../StatesAndFunctions/StatesAndFunctions';
+import { handleClickRefresh } from '../StatesAndFunctions/StatesAndFunctions';
 
 const Countries = () => {
 
     const [currency, setCurrency] = useState('');
     const [country, setCountry] = useState([]);
-    const [countryId, setCountryId] = useState('');
     const [countryName, setCountryName] = useState('');
     const [sorting, setSorting] = useState('');
     const [countrySearchResult, setCountrySearchResult] = useState([]);
 
     const handleClickFindCountries = () => {
         
-        document.getElementById('moreCountry').innerHTML = "";
+        document.getElementById('moreCountryDiv').innerHTML = "";
 
         fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/countries?currencyCode=${currency}`, {
             "method": "GET",
@@ -40,52 +42,56 @@ const Countries = () => {
             });
     }
 
-    const handleLoadMore = () => {
+    // handleLoadMore(country,'moreCountryDiv');
+    // handleOnSubmit(countryName,sorting,setCountrySearchResult);
+    // handleClickRefresh();
 
-        const moreCountry = country.slice(10);
-        console.log(moreCountry);
-        if (moreCountry.length !== 0) {
+    // const handleLoadMore = () => {
 
-            document.getElementById('moreCountry').innerText = moreCountry.map(country => country.name);
+    //     const moreCountry = country.slice(10);
+    //     console.log(moreCountry);
+    //     if (moreCountry.length !== 0) {
 
-        }
-        else {
-            document.getElementById('moreCountry').innerText = "Sorry nothing to Load";
-        }
-    }
+    //         document.getElementById('moreCountry').innerText = moreCountry.map(country => country.name);
 
-    const handleOnSubmit = () => {
+    //     }
+    //     else {
+    //         document.getElementById('moreCountry').innerText = "Sorry nothing to Load";
+    //     }
+    // }
+
+    // const handleOnSubmit = () => {
         
-        console.log(countryName, 'clicked');
+    //     console.log(countryName, 'clicked');
         
-        fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/countries?namePrefix=${countryName}`, {
-            "method": "GET",
-            "headers": {
-                "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
-                "x-rapidapi-key": "1c8bec90d8msh4fe16494e72b79ep16f4c4jsn4f21e6d6fea7"
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                const allCountries = data.data.map(data =>data.name);
-                const ascendingCountries= sorting==='Descending'?allCountries.sort().reverse():allCountries.sort();
+    //     fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/countries?namePrefix=${countryName}`, {
+    //         "method": "GET",
+    //         "headers": {
+    //             "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
+    //             "x-rapidapi-key": "1c8bec90d8msh4fe16494e72b79ep16f4c4jsn4f21e6d6fea7"
+    //         }
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             const allCountries = data.data.map(data =>data.name);
+    //             const ascendingCountries = sorting==='Descending'?allCountries.sort().reverse():allCountries.sort();
 
-                if(countryName===""){
-                    alert("Please enter!");
-                }
-                else {
-                setCountrySearchResult(ascendingCountries);
-                }
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    };
+    //             if(countryName===""){
+    //                 alert("Please enter!");
+    //             }
+    //             else {
+    //             setCountrySearchResult(ascendingCountries);
+    //             }
+    //         })
+    //         .catch(err => {
+    //             console.error(err);
+    //         });
+    // };
 
-    const handleClickRefresh = ()=>{
+    // const handleClickRefresh = ()=>{
 
-        window.location.reload();
-    }
+    //     window.location.reload();
+    // }
 
     return (
         
@@ -120,7 +126,7 @@ const Countries = () => {
 
               {/* filter by countryName and sorting div starts */}
 
-                <SortAndFilter setSorting={setSorting} setCountryName={setCountryName} handleOnSubmit={handleOnSubmit}/>
+                <SortAndFilter sorting={sorting} countryName={countryName} setCountrySearchResult={setCountrySearchResult} setSorting={setSorting} setCountryName={setCountryName} handleOnSubmit={handleOnSubmit}/>
             
 
               {/* Country list table div starts       */}
