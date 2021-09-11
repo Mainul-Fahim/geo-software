@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import DisplayList from '../DisplayList/DisplayList';
 import DisplayListRegion from '../DisplayListRegion/DisplayListRegion';
-import SortAndFilter from '../SortAndFilter/SortAndFilter';
 import SortAndFilterRegion from '../SortAndFilterRegion/SortAndFilterRegion';
 import { handleLoadMore } from '../StatesAndFunctions/StatesAndFunctions';
-import { handleOnSubmitRegion } from '../StatesAndFunctions/StatesAndFunctions';
 import { handleClickRefresh } from '../StatesAndFunctions/StatesAndFunctions';
 
 const Regions = () => {
@@ -108,12 +105,12 @@ const Regions = () => {
                 </div>
                 
             </div>
-            {/* filter by countryName and sorting div starts */}
+            {/* filter by regionName and sorting div starts */}
 
             <SortAndFilterRegion sorting={sorting} setSorting={setSorting} setRegionName={setRegionName} setRegionSearchResult={setRegionSearchResult} regionName={regionName} handleOnSubmitRegion={handleOnSubmitRegion} handleSort={handleSort} />
             
 
-            {/* Country list table div starts       */}
+            {/* region list table div starts       */}
             
              <DisplayListRegion region={region} regionSearchResult={regionSearchResult} handleLoadMore={handleLoadMore} />
         </div>

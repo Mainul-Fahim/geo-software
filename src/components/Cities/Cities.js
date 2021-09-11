@@ -110,12 +110,12 @@ const Cities = () => {
                 </div>
 
             </div>
-            {/* filter by countryName and sorting div starts */}
+            {/* filter by cityName and sorting div starts */}
 
             <SortAndFilterCIty sorting={sorting} setSorting={setSorting} setCityName={setCityName} setCitySearchResult={setCitySearchResult} cityName={cityName} handleOnSubmitCity={handleOnSubmitCity} handleSort={handleSort} />
 
 
-            {/* Country list table div starts       */}
+            {/* City list table div starts       */}
 
             <div>
                 <DisplayListCity city={city} citySearchResult={citySearchResult} handleLoadMore={handleLoadMore} metaData={metaData} />

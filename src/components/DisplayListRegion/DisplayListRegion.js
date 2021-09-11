@@ -9,7 +9,6 @@ const DisplayListRegion = ({region,regionSearchResult,handleLoadMore}) => {
                     <tbody>
                         {region.slice(0, 10).map(country => <tr>
 
-                            {/* <Link to={`/regions/${country.slice(-2)}`}></Link> */}
                             <td id="allCountry" colspan="4" ><Link to={`/cities/${country.slice(-2)}`} style={{textDecoration:'none'}}>{country.split(',')[0]} </Link></td>
 
                         </tr>)}

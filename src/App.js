@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import Cities from "./components/Cities/Cities";
 import Countries from "./components/Countries/Countries";
